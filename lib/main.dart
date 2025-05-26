@@ -1,10 +1,16 @@
 import 'package:expense_tracker/widgets/expenses.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
   seedColor: Color.fromARGB(255, 96, 59, 181),
 );
 void main() {
+  // -- to ensure initializing of SystemChrome orientation function
+  // -- ensure than app only availabele in the portrait view mode
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
+  //   (fn) => {
   runApp(
     MaterialApp(
       theme: ThemeData.light().copyWith(
@@ -24,9 +30,7 @@ void main() {
           ),
         ),
         textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            foregroundColor: kColorScheme.primary,
-          ),
+          style: TextButton.styleFrom(foregroundColor: kColorScheme.primary),
         ),
         inputDecorationTheme: InputDecorationTheme(
           labelStyle: TextStyle(color: kColorScheme.primary),
@@ -43,4 +47,6 @@ void main() {
       home: Expenses(),
     ),
   );
+  //   },
+  // );
 }
