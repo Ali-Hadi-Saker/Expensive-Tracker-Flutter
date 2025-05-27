@@ -77,85 +77,88 @@ class _NewExpenseState extends State<NewExpense> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(16),
-      child: Column(
-        children: [
-          TextField(
-            controller: _textController,
-            maxLength: 50,
-            decoration: InputDecoration(label: Text('Tilte')),
-          ),
-          Row(
-            children: [
-              Expanded(
-                //use expanded cz textField cause conflict with row
-                child: TextField(
-                  controller: _amountController,
-                  maxLength: 50,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    label: Text('Amount'),
-                    prefixText: '\$ ',
+    final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(16, 16, 16, keyboardSpace + 16),
+        child: Column(
+          children: [
+            TextField(
+              controller: _textController,
+              maxLength: 50,
+              decoration: InputDecoration(label: Text('Tilte')),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  //use expanded cz textField cause conflict with row
+                  child: TextField(
+                    controller: _amountController,
+                    maxLength: 50,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      label: Text('Amount'),
+                      prefixText: '\$ ',
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                //use expanded cause row inside row
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      selectedDate == null
-                          ? 'No date selected'
-                          : formater.format(selectedDate!),
-                    ),
-                    SizedBox(width: 15),
-                    IconButton(
-                      onPressed: _datePicker,
-                      icon: Icon(Icons.calendar_month),
-                    ),
-                  ],
+                Expanded(
+                  //use expanded cause row inside row
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        selectedDate == null
+                            ? 'No date selected'
+                            : formater.format(selectedDate!),
+                      ),
+                      SizedBox(width: 15),
+                      IconButton(
+                        onPressed: _datePicker,
+                        icon: Icon(Icons.calendar_month),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: 15),
-          Row(
-            children: [
-              DropdownButton(
-                value: selectedCategory,
-                items:
-                    Category.values
-                        .map(
-                          (category) => DropdownMenuItem(
-                            value:
-                                category, //the value is passed to onChange function
-                            child: Text(category.name.toUpperCase()),
-                          ),
-                        )
-                        .toList(),
-                onChanged:
-                    (value) => {
-                      setState(() {
-                        selectedCategory = value!;
-                      }),
-                    },
-              ),
-              Spacer(),
-              ElevatedButton(
-                onPressed: _submitExpenseData,
-                child: Text('Save Expense'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('Cancel'),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+            SizedBox(height: 15),
+            Row(
+              children: [
+                DropdownButton(
+                  value: selectedCategory,
+                  items:
+                      Category.values
+                          .map(
+                            (category) => DropdownMenuItem(
+                              value:
+                                  category, //the value is passed to onChange function
+                              child: Text(category.name.toUpperCase()),
+                            ),
+                          )
+                          .toList(),
+                  onChanged:
+                      (value) => {
+                        setState(() {
+                          selectedCategory = value!;
+                        }),
+                      },
+                ),
+                Spacer(),
+                ElevatedButton(
+                  onPressed: _submitExpenseData,
+                  child: Text('Save Expense'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Cancel'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
